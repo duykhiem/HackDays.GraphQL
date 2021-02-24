@@ -1,4 +1,13 @@
 /* Provide sufficient contrast against white background */
+
+.logo {
+    margin: -25px;
+    padding-left: 20px;
+}
+
+.menu {
+    font-size: 20px;
+}
 a {
   color: #0366d6;
 }
@@ -21,4 +30,63 @@ code {
 .product-item:hover {
     box-shadow: 0 0 8px 1px rgb(0 0 0 / 20%);
     transition: box-shadow .1s ease-out;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.footerWrapper {
+    background-color: #0a0a0a;
+    color: white;
+    margin: 0 !important;
+    margin-top: 25px !important;
+    padding-top: 25px;
+    width: auto !important;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-shadow: 1px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+.footerWrapper i {
+    font-size: 30px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.padding-left-0 {
+    padding-left: 0 !important;
+}
+
+.letter {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #ddd;
+    border-color: #ddd;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.flashSale {
+    margin-top: 50px;
 }

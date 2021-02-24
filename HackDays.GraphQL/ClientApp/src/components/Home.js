@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios'
-
+import { CarouselImages } from './CarouselImages';
+import { ProductList } from './ProductList'
 export class Home extends Component {
     constructor(props) {
         super(props);
@@ -18,24 +18,17 @@ export class Home extends Component {
     render() {
 
         return (
-            this.state.loading
-                ? <p><em>Loading...</em></p> :
-                <div className="row">
-                    {
-                        this.state.products.map((product: any) =>
-                            <div className="col-md-4">
-                                <div className="product-item">
-                                    <Link to="/mens" className="text-decoration-none text-reset">
-                                        <img src={product.image} className="w-100" />
-                                        <h5>{product.name} </h5>
-                                        <small className="text-muted">{product.code} </small>
-                                        <div>${product.price}</div>
-                                    </Link>
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
+            <div>
+                <CarouselImages/>
+                {
+                    this.state.loading
+                        ? <p><em>Loading...</em></p> :
+                        <div className="flashSale">
+                            <h2>FLASH SALE!!!</h2>
+                            <ProductList products={this.state.products} />
+                        </div>
+                }
+            </div>
         );
     }
 
