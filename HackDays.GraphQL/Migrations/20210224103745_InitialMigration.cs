@@ -21,7 +21,7 @@ namespace HackDays.GraphQL.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: true),
-                    Image = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     Category = table.Column<string>(nullable: false)
                 },
                 constraints: table =>

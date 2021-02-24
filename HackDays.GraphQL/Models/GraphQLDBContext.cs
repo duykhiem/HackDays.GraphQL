@@ -43,7 +43,7 @@ namespace HackDays.GraphQL.Models
 
                 entity.Property(e => e.Description);
 
-                entity.Property(e => e.Image);
+                entity.Property(e => e.ImageUrl);
 
                 entity.Property(e => e.Price);
 

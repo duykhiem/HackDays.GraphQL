@@ -1,4 +1,5 @@
 ﻿using HackDays.GraphQL.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,9 +9,9 @@ namespace HackDays.GraphQL.Repositories
     {
         private readonly GraphQLDBContext _context;
 
-        public ProductRepository(GraphQLDBContext context)
+        public ProductRepository(IServiceScopeFactory factory)
         {
-            this._context = context;
+            _context = factory.CreateScope().ServiceProvider.GetRequiredService<GraphQLDBContext>();
         }
 
         public Product Add(Product product)
