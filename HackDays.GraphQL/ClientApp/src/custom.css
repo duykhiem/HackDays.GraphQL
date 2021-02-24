@@ -12,3 +12,13 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.product-item {
+    padding: 10px;
+    overflow: hidden;
+}
+
+.product-item:hover {
+    box-shadow: 0 0 8px 1px rgb(0 0 0 / 20%);
+    transition: box-shadow .1s ease-out;
+}
