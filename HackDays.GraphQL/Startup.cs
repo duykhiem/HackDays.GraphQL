@@ -1,5 +1,8 @@
 using GraphQL.Server;
 using GraphQL.Types;
+using HackDays.GraphQL.GraphQL;
+using HackDays.GraphQL.GraphQL.Types;
+using HackDays.GraphQL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,8 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using StarWars;
-using StarWars.Types;
+
 
 namespace HackDays.GraphQL
 {
@@ -25,15 +27,12 @@ namespace HackDays.GraphQL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<StarWarsData>();
-            services.AddSingleton<StarWarsQuery>();
-            services.AddSingleton<StarWarsMutation>();
-            services.AddSingleton<HumanType>();
-            services.AddSingleton<HumanInputType>();
-            services.AddSingleton<DroidType>();
-            services.AddSingleton<CharacterInterface>();
-            services.AddSingleton<EpisodeEnum>();
-            services.AddSingleton<ISchema, StarWarsSchema>();
+            services.AddSingleton<ProductGraphType>();
+            services.AddSingleton<CategoryGraphType>();
+            services.AddSingleton<ProductRepository>();
+            services.AddSingleton<ProductQuery>();
+            services.AddSingleton<ISchema, ProductSchema>();
+
 
             services.AddLogging(builder => builder.AddConsole());
             services.AddHttpContextAccessor();
@@ -67,7 +66,7 @@ namespace HackDays.GraphQL
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

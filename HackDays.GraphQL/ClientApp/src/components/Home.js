@@ -5,7 +5,8 @@ export class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hero: { name: "" }, loading: true
+            products: [],
+            loading: true
         };
     }
 
@@ -18,17 +19,21 @@ export class Home extends Component {
         return (
             this.state.loading
                 ? <p><em>Loading...</em></p> :
-                <div>
-                    <h1>Hero name is {this.state.hero.name} </h1>
-                </div>
+                this.state.products.map((product: any) =>
+                    <div>
+                        <h5>Product name: {product.name} </h5>
+                        <h5>Description: {product.description} </h5>
+                    </div>
+                )
         );
     }
 
     async populateData() {
         const body = {
             query: `query {
-              hero {
-                name
+              products {
+                name,
+                description
               }
             }`,
             variables: {}
@@ -37,7 +42,7 @@ export class Home extends Component {
         axios.post("https://localhost:44354/graphql", body)
             .then(res => {
                 console.log(res.data)
-                this.setState({ hero: res.data.data.hero, loading: false })
+                this.setState({ products: res.data.data.products, loading: false })
             })
     }
 }
