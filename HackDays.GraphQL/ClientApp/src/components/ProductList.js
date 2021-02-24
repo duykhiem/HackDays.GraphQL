@@ -8,8 +8,8 @@ export function ProductList(props) {
                 props.products.map((product) =>
                     <div className="col-md-3">
                         <div className="product-item">
-                            <Link to="/mens" className="text-decoration-none text-reset">
-                                <img src={product.image} className="w-100" />
+                            <Link to={{ pathname: '/product/' + product.id }} className="text-decoration-none text-reset">
+                                <img src={product.imageUrl} className="w-100" />
                                 <h5>{product.name} </h5>
                                 <small className="text-muted">{product.code} </small>
                                 <div>${product.price}</div>

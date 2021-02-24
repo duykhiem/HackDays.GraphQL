@@ -36,9 +36,10 @@ export class Home extends Component {
         const body = {
             query: `query {
               products {
+                id,
                 name,
                 code,
-                image,
+                imageUrl,
                 price
               }
             }`,

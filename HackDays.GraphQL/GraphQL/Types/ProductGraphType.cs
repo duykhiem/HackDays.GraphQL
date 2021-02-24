@@ -12,7 +12,7 @@ namespace HackDays.GraphQL.GraphQL.Types
             Field(t => t.Name).Description("The name of the product");
             Field(t => t.Description).Description("The description of the product");
             Field(t => t.Price).Description("The price of the product");
-            Field(t => t.Image).Description("The image of the product");
+            Field(t => t.ImageUrl).Description("The image of the product");
             Field<CategoryGraphType>("Category", "The category of product");
         }
     }
