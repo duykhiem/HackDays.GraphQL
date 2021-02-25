@@ -16,7 +16,6 @@ namespace HackDays.GraphQL.GraphQL
                 resolve: context =>
                 {
                     var product = context.GetArgument<Product>("product");
-                    product.Id = 0;
                     return productRepository.Add(product);
                 }
             );
@@ -40,7 +39,7 @@ namespace HackDays.GraphQL.GraphQL
             );
 
             Field<BooleanGraphType>(
-                "deleteproduct",
+                "deleteProduct",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }
                 ),
