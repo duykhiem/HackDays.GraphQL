@@ -21,7 +21,7 @@ namespace HackDays.GraphQL.GraphQL
             );
 
             Field<ProductGraphType>(
-                "updateOwner",
+                "updateproduct",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<ProductInputType>> { Name = "product" }),
                 resolve: context =>
