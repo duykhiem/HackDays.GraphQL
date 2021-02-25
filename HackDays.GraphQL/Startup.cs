@@ -58,7 +58,7 @@ namespace HackDays.GraphQL
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, GraphQLDBContext context)
         {
             if (env.IsDevelopment())
             {
@@ -81,6 +81,8 @@ namespace HackDays.GraphQL
 
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
+
+            context.Seed();
 
             app.UseSpa(spa =>
             {
