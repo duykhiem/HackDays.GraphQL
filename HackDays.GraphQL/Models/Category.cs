@@ -5,6 +5,7 @@
         Shoes,
         Jackets,
         Shirts,
-        Sweatshirts
+        Sweatshirts,
+        Bags
     }
 }

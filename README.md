@@ -4,6 +4,8 @@ This is a simple project to have fun with GraphQL of Hanoi Multitenant Team 1 us
 
 ## First run?
 
+At path `..\HackDays.GraphQL\HackDays.GraphQL` run `dotnet ef database update` to create database and create some sample products
+
 Open `HackDays.GraphQL.sln` then hit F5 :)
 
 ## Endpoints
