@@ -36,6 +36,7 @@ namespace HackDays.GraphQL
             services.AddSingleton<CategoryGraphType>();
             services.AddSingleton<ProductRepository>();
             services.AddSingleton<ProductQuery>();
+            services.AddSingleton<ProductMutation>();
             services.AddSingleton<ISchema, ProductSchema>();
 
 
