@@ -29,7 +29,7 @@ export class Home extends Component {
                                 FLASH SALE!!!
                                 <small className="float-right"><Link to="/product/add" >Add new</Link></small>    
                             </h2>
-                            <ProductList products={this.state.products} />
+                            <ProductList products={this.state.products} onDeleteProduct={(id) => this.deleteProduct(id)} />
                         </div>
                 }
             </div>
@@ -54,6 +54,24 @@ export class Home extends Component {
             .then(res => {
                 console.log(res.data)
                 this.setState({ products: res.data.data.products, loading: false })
+            })
+    }
+
+    async deleteProduct(id) {
+        const body = {
+            query: `
+                    mutation {
+                        status: deleteproduct(id: ${id})
+                    }
+                `,
+            variables: {}
+        }
+
+        axios.post("http://localhost:50308/graphql", body)
+            .then(res => {
+                if (res.data.data.status) {
+                    this.populateData();
+                }
             })
     }
 }
