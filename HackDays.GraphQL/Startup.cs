@@ -33,6 +33,7 @@ namespace HackDays.GraphQL
                 options.UseSqlServer(Configuration.GetConnectionString("GraphQLDatabase")));
 
             services.AddSingleton<ProductGraphType>();
+            services.AddSingleton<ProductInputType>();
             services.AddSingleton<CategoryGraphType>();
             services.AddSingleton<ProductRepository>();
             services.AddSingleton<ProductQuery>();

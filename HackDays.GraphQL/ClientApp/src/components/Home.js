@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { CarouselImages } from './CarouselImages';
 import { ProductList } from './ProductList'
+import { Link } from 'react-router-dom';
 export class Home extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +25,10 @@ export class Home extends Component {
                     this.state.loading
                         ? <p><em>Loading...</em></p> :
                         <div className="flashSale">
-                            <h2>FLASH SALE!!!</h2>
+                            <h2>
+                                FLASH SALE!!!
+                                <small className="float-right"><Link to="/product/add" >Add new</Link></small>    
+                            </h2>
                             <ProductList products={this.state.products} />
                         </div>
                 }

@@ -16,7 +16,7 @@ namespace HackDays.GraphQL.GraphQL.Types
 			Field<NonNullGraphType<StringGraphType>>("name");
 			Field<StringGraphType>("description");
 			Field<DecimalGraphType>("price");
-			Field<StringGraphType>("imageurl");
+			Field<StringGraphType>("imageUrl");
 			Field<StringGraphType>("category");
 		}
 	}

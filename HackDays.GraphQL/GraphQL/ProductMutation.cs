@@ -11,7 +11,7 @@ namespace HackDays.GraphQL.GraphQL
         public ProductMutation(ProductRepository productRepository)
         {
             Field<ProductGraphType>(
-                "createproduct",
+                "createProduct",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<ProductInputType>> { Name = "product" }),
                 resolve: context =>
                 {
@@ -21,7 +21,7 @@ namespace HackDays.GraphQL.GraphQL
             );
 
             Field<ProductGraphType>(
-                "updateOwner",
+                "updateProduct",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<ProductInputType>> { Name = "product" }),
                 resolve: context =>
@@ -38,16 +38,16 @@ namespace HackDays.GraphQL.GraphQL
                 }
             );
 
-            Field<BooleanGraphType>(
-                "deleteproduct",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }
-                ),
-                resolve: context => {
-                    var id = context.GetArgument<int>("id");
-                    return productRepository.Delete(id);
-                }
-            );
+            //Field<BooleanGraphType>(
+            //    "deleteProduct",
+            //    arguments: new QueryArguments(
+            //        new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }
+            //    ),
+            //    resolve: context => {
+            //        var id = context.GetArgument<int>("id");
+            //        return productRepository.Delete(id);
+            //    }
+            //);
         }
     }
 }
