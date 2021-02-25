@@ -19,13 +19,7 @@ export class AddProduct extends Component {
             loading: true
         };
 
-        this.onChangeProductName = this.onChangeProductName.bind(this);
-        this.onChangeImageUrl = this.onChangeImageUrl.bind(this);
-        this.onChangeCode = this.onChangeCode.bind(this);
-        this.onChangePrice = this.onChangePrice.bind(this);
-        this.onChangeCategory = this.onChangeCategory.bind(this);
-        this.onChangeDescription = this.onChangeDescription.bind(this);
-
+        this.handleChanges = this.handleChanges.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -33,36 +27,13 @@ export class AddProduct extends Component {
        this.populateData();
     }
 
-    onChangeProductName(e) {
-        var product = { ...this.state.product }
-        product.name = e.target.value;
-        this.setState({ product: product })
-    }
-    onChangeImageUrl(e) {
-        var product = { ...this.state.product }
-        product.imageUrl = e.target.value;
-        this.setState({ product: product })
-    }
-    onChangeCode(e) {
-        var product = { ...this.state.product }
-        product.code = e.target.value;
-        this.setState({ product: product })
-    }
-    onChangePrice(e) {
-        var product = { ...this.state.product }
-        product.price = parseFloat(e.target.value);
-        this.setState({ product: product })
-    }
-    onChangeCategory(e) {
-        var product = { ...this.state.product }
-        product.category = e.target.value;
-        this.setState({ product: product })
-    }
-    onChangeDescription(e) {
-        var product = { ...this.state.product }
-        product.description = e.target.value;
-        this.setState({ product: product })
-    }
+    handleChanges = (event) => {
+        const fieldName = event.target.name;
+        const currentProduct = Object.assign({}, this.state.product);
+        const targetValue = event.target.value;
+        currentProduct[fieldName] = targetValue;
+        this.setState({ product: currentProduct })
+    };
 
     handleSubmit(event) {
         event.preventDefault();
@@ -81,27 +52,27 @@ export class AddProduct extends Component {
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label>Name</label>
-                                        <input type="text" value={this.state.product.name} onChange={this.onChangeProductName} className="form-control" />
+                                        <input type="text" name="name" value={this.state.product.name} onChange={this.handleChanges} className="form-control" />
                                     </div>
                                     <div className="form-group">
                                         <label>Image Url</label>
-                                        <input type="text" value={this.state.product.imageUrl} onChange={this.onChangeImageUrl} className="form-control" />
+                                        <input type="text" name="imageUrl" value={this.state.product.imageUrl} onChange={this.handleChanges} className="form-control" />
                                     </div>
                                     <div className="form-group">
                                         <label>Code</label>
-                                        <input type="text" value={this.state.product.code} onChange={this.onChangeCode} className="form-control" />
+                                        <input type="text" name="code" value={this.state.product.code} onChange={this.handleChanges} className="form-control" />
                                     </div>
                                     <div className="form-group">
                                         <label>Price</label>
-                                        <input type="number" value={this.state.product.price} onChange={this.onChangePrice} className="form-control" />
+                                        <input type="number" name="price" value={this.state.product.price} onChange={this.handleChanges} className="form-control" />
                                     </div>
                                     <div className="form-group">
                                         <label>Category</label>
-                                        <input type="text" value={this.state.product.category} onChange={this.onChangeCategory} className="form-control" />
+                                        <input type="text" name="category" value={this.state.product.category} onChange={this.handleChanges} className="form-control" />
                                     </div>
                                     <div className="form-group">
                                         <label>Description</label>
-                                        <textarea onChange={this.onChangeDescription} className="form-control">{this.state.product.description}</textarea>
+                                        <textarea name="description" onChange={this.handleChanges} className="form-control">{this.state.product.description}</textarea>
                                     </div>
                                     <div className="form-group">
                                         <button type="submit" className="btn btn-primary mr-1">Add</button>
