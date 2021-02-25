@@ -38,16 +38,16 @@ namespace HackDays.GraphQL.GraphQL
                 }
             );
 
-            //Field<BooleanGraphType>(
-            //    "deleteProduct",
-            //    arguments: new QueryArguments(
-            //        new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }
-            //    ),
-            //    resolve: context => {
-            //        var id = context.GetArgument<int>("id");
-            //        return productRepository.Delete(id);
-            //    }
-            //);
+            Field<BooleanGraphType>(
+                "deleteproduct",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }
+                ),
+                resolve: context => {
+                    var id = context.GetArgument<int>("id");
+                    return productRepository.Delete(id);
+                }
+            );
         }
     }
 }
