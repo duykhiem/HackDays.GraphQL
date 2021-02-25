@@ -21,8 +21,9 @@ namespace HackDays.GraphQL.Repositories
             return savedProduct;
         }
 
-        public bool Delete(Product product)
+        public bool Delete(int id)
         {
+            var product = _context.Products.FirstOrDefault(i => i.Id == id);
             _context.Products.Remove(product);
             _context.SaveChanges();
             return true;
