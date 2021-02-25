@@ -32,13 +32,13 @@ namespace HackDays.GraphQL
             services.AddDbContext<GraphQLDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("GraphQLDatabase")));
 
-            services.AddSingleton<ProductGraphType>();
-            services.AddSingleton<CategoryGraphType>();
-            services.AddSingleton<ProductInputType>();
-            services.AddSingleton<ProductRepository>();
-            services.AddSingleton<ProductQuery>();
-            services.AddSingleton<ProductMutation>();
-            services.AddSingleton<ISchema, ProductSchema>();
+            services.AddScoped<ProductGraphType>();
+            services.AddScoped<CategoryGraphType>();
+            services.AddScoped<ProductInputType>();
+            services.AddScoped<ProductRepository>();
+            services.AddScoped<ProductQuery>();
+            services.AddScoped<ProductMutation>();
+            services.AddScoped<ISchema, ProductSchema>();
 
 
             services.AddLogging(builder => builder.AddConsole());

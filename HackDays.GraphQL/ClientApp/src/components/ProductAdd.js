@@ -24,7 +24,7 @@ export class AddProduct extends Component {
     }
 
     componentDidMount() {
-       this.populateData();
+        this.getCategories();
     }
 
     handleChanges = (event) => {
@@ -37,7 +37,7 @@ export class AddProduct extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.submitData();
+        this.createProduct();
     }
 
     render() {
@@ -46,7 +46,7 @@ export class AddProduct extends Component {
                 ? <p><em>Loading...</em></p> :
                 <React.Fragment>
                     <div>
-                        <h2>Add Product</h2>
+                        <h2>Create Product</h2>
                         <div className="row">
                             <div className="col-md-6">
                                 <form onSubmit={this.handleSubmit}>
@@ -75,8 +75,8 @@ export class AddProduct extends Component {
                                         <textarea name="description" onChange={this.handleChanges} className="form-control">{this.state.product.description}</textarea>
                                     </div>
                                     <div className="form-group">
-                                        <button type="submit" className="btn btn-primary mr-1">Add</button>
                                         <Link to='/' className="btn btn-secondary">Back</Link>
+                                        <button type="submit" className="btn btn-primary mr-1 float-right">Add</button>
                                     </div>
                                 </form>
                             </div>
@@ -87,7 +87,7 @@ export class AddProduct extends Component {
         );
     }
 
-    async populateData() {
+    async getCategories() {
         const body = {
             query: `
                 query {
@@ -108,7 +108,7 @@ export class AddProduct extends Component {
             })
     }
 
-    async submitData() {
+    async createProduct() {
         const body = {
             query: `
                 mutation {
@@ -131,7 +131,7 @@ export class AddProduct extends Component {
         axios.post("http://localhost:50308/graphql", body)
             .then(res => {
                 console.log(res.data)
-                alert('Add new product success');
+                alert('Add new product successfully!');
                 if (res.data.data.product.id > 0) {
                     this.props.history.push('/');
                 }

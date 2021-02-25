@@ -1,4 +1,5 @@
 ﻿using HackDays.GraphQL.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace HackDays.GraphQL.Repositories
     {
         private readonly GraphQLDBContext _context;
 
-        public ProductRepository(IServiceScopeFactory factory)
+        public ProductRepository(GraphQLDBContext context)
         {
-            _context = factory.CreateScope().ServiceProvider.GetRequiredService<GraphQLDBContext>();
+            _context = context;
         }
 
         public Product Add(Product product)
@@ -31,7 +32,7 @@ namespace HackDays.GraphQL.Repositories
 
         public Product GetById(int id)
         {
-            return _context.Products.FirstOrDefault(i => i.Id == id);
+            return _context.Products.AsNoTracking().FirstOrDefault(i => i.Id == id);
         }
 
         public List<Product> GetAll()

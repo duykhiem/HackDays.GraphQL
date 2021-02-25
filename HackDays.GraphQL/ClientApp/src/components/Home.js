@@ -13,21 +13,21 @@ export class Home extends Component {
     }
 
     componentDidMount() {
-        this.populateData();
+        this.getProducts();
     }
 
     render() {
 
         return (
             <div>
-                <CarouselImages/>
+                <CarouselImages />
                 {
                     this.state.loading
                         ? <p><em>Loading...</em></p> :
                         <div className="flashSale">
                             <h2>
                                 FLASH SALE!!!
-                                <small className="float-right"><Link to="/product/add" >Add new</Link></small>    
+                                <small className="float-right"><Link to="/product/add" className="btn btn-default" >Create product</Link></small>
                             </h2>
                             <ProductList products={this.state.products} onDeleteProduct={(id) => this.deleteProduct(id)} />
                         </div>
@@ -36,7 +36,7 @@ export class Home extends Component {
         );
     }
 
-    async populateData() {
+    async getProducts() {
         const body = {
             query: `query {
               products {
@@ -61,7 +61,7 @@ export class Home extends Component {
         const body = {
             query: `
                     mutation {
-                        status: deleteproduct(id: ${id})
+                        status: deleteProduct(id: ${id})
                     }
                 `,
             variables: {}
@@ -70,7 +70,7 @@ export class Home extends Component {
         axios.post("http://localhost:50308/graphql", body)
             .then(res => {
                 if (res.data.data.status) {
-                    this.populateData();
+                    this.getProducts();
                 }
             })
     }

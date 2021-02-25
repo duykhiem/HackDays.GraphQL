@@ -12,7 +12,19 @@ export class ProductDetail extends Component {
     }
 
     componentDidMount() {
-        this.populateData(this.props.match.params.id);
+        this.getProductById(this.props.match.params.id);
+    }
+    handleChanges = (event) => {
+        const fieldName = event.target.name;
+        const currentProduct = Object.assign({}, this.state.product);
+        const targetValue = event.target.value;
+        currentProduct[fieldName] = targetValue;
+        this.setState({ product: currentProduct })
+    };
+
+    handleSubmit(event) {
+        event.preventDefault();
+        this.submitData();
     }
 
     render() {
@@ -52,7 +64,7 @@ export class ProductDetail extends Component {
         );
     }
 
-    async populateData(id) {
+    async getProductById(id) {
         const body = {
             query: `query {
               product(id: ${id}) {

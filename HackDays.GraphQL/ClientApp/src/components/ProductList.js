@@ -2,9 +2,10 @@
 import { Link } from 'react-router-dom';
 
 export function ProductList(props) {
-    const handleDelete = function (event, id) {
+
+    const handleDelete = function (event, id, name) {
         event.preventDefault();
-        if (window.confirm("Are you sure?")) {
+        if (window.confirm(`Are you sure you want to delete product "${name}" ?`)) {
             props.onDeleteProduct(id);
         }
     };
@@ -22,7 +23,7 @@ export function ProductList(props) {
                                 <div>${product.price}</div>
                                 <span className="product-actions">
                                     <Link to={{ pathname: '/product/' + product.id + '/edit' }} ><i className="fa fa-pencil mr-2"></i></Link>
-                                    <a href="javascript:void(0)"><i className="text-danger" onClick={(e) => handleDelete(e, product.id)} className="text-danger fa fa-trash"></i></a>
+                                    <a href="javascript:void(0)"><i className="text-danger" onClick={(e) => handleDelete(e, product.id, product.name)} className="text-danger fa fa-trash"></i></a>
                                 </span>
                             </Link>
                         </div>
