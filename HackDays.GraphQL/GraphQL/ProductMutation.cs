@@ -16,6 +16,7 @@ namespace HackDays.GraphQL.GraphQL
                 resolve: context =>
                 {
                     var product = context.GetArgument<Product>("product");
+                    product.Id = 0;
                     return productRepository.Add(product);
                 }
             );

@@ -14,7 +14,7 @@ export function ProductList(props) {
                                 <small className="text-muted">{product.code} </small>
                                 <div>${product.price}</div>
                                 <span className="product-actions">
-                                    <Link to={{ pathname: '/product/' + product.id + '/edit' }} ><i className="fa fa-pencil mr-1"></i></Link>
+                                    <Link to={{ pathname: '/product/' + product.id + '/edit' }} ><i className="fa fa-pencil mr-2"></i></Link>
                                     <Link to="/product/add" className="text-danger"><i className="fa fa-trash"></i></Link>
                                 </span>
                             </Link>

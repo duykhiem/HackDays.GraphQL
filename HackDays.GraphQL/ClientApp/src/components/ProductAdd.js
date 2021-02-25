@@ -7,11 +7,12 @@ export class AddProduct extends Component {
         super(props);
         this.state = {
             product: {
+                id: 0,
                 name: '',
                 imageUrl: '',
                 code: '',
-                price: '',
-                category: '',
+                price: 0,
+                category: 'SHOES',
                 description: '',
             },
             categories: [],
@@ -25,7 +26,6 @@ export class AddProduct extends Component {
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
 
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -34,31 +34,34 @@ export class AddProduct extends Component {
     }
 
     onChangeProductName(e) {
-        this.setState({ product: { name: e.target.value} })
+        var product = { ...this.state.product }
+        product.name = e.target.value;
+        this.setState({ product: product })
     }
     onChangeImageUrl(e) {
-        this.setState({ product: { imageUrl: e.target.value} })
+        var product = { ...this.state.product }
+        product.imageUrl = e.target.value;
+        this.setState({ product: product })
     }
     onChangeCode(e) {
-        this.setState({ product: { code: e.target.value} })
+        var product = { ...this.state.product }
+        product.code = e.target.value;
+        this.setState({ product: product })
     }
     onChangePrice(e) {
-        this.setState({ product: { price: e.target.value} })
+        var product = { ...this.state.product }
+        product.price = parseFloat(e.target.value);
+        this.setState({ product: product })
     }
     onChangeCategory(e) {
-        this.setState({ product: { category: e.target.value} })
+        var product = { ...this.state.product }
+        product.category = e.target.value;
+        this.setState({ product: product })
     }
     onChangeDescription(e) {
-        this.setState({ product: { description: e.target.value} })
-    }
-
-    handleChange(event) {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        this.setState({
-            [name]: value
-        })
+        var product = { ...this.state.product }
+        product.description = e.target.value;
+        this.setState({ product: product })
     }
 
     handleSubmit(event) {
@@ -90,7 +93,7 @@ export class AddProduct extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Price</label>
-                                        <input type="text" value={this.state.product.price} onChange={this.onChangePrice} className="form-control" />
+                                        <input type="number" value={this.state.product.price} onChange={this.onChangePrice} className="form-control" />
                                     </div>
                                     <div className="form-group">
                                         <label>Category</label>
@@ -138,9 +141,17 @@ export class AddProduct extends Component {
         const body = {
             query: `
                 mutation {
-	                createProduct(product: ${this.state.product}) {
-                        id
-                    }
+                  product: createProduct(product: {
+    	              id: 0
+                      name: "${this.state.product.name}"
+                      code: "${this.state.product.code}"
+                      description: "${this.state.product.description}"
+                      imageUrl: "product/7.jfif"
+                      price: ${this.state.product.price}
+                      category: "SHOES"
+                  }) {
+                    id
+                  }
                 }
             `,
             variables: {}
@@ -150,7 +161,9 @@ export class AddProduct extends Component {
             .then(res => {
                 console.log(res.data)
                 alert('Add new product success');
-                this.props.history.push('/');
+                if (res.data.data.product.id > 0) {
+                    this.props.history.push('/');
+                }
             })
     }
 }
