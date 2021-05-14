@@ -11,4 +11,4 @@ export function CarouselImages() {
             <img src={require('../assets/4.PNG')} />
         </Carousel>
     );
-};
+}

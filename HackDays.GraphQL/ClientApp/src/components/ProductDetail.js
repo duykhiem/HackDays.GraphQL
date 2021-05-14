@@ -34,7 +34,7 @@ export class ProductDetail extends Component {
                 <React.Fragment>
                     <div className="row">
                         <div className="col-md-4">
-                            <img src={this.state.product.imageUrl} className="w-100" />
+                            <img src={'/public/' + this.state.product.imageUrl} className="w-100" />
                         </div>
                         <div className="col-md-8">
                             <h5>{this.state.product.name} </h5>
@@ -78,7 +78,7 @@ export class ProductDetail extends Component {
             variables: {}
         }
 
-        axios.post("http://localhost:50308/graphql", body)
+        axios.post(process.env.API_URL + "/graphql", body)
             .then(res => {
                 console.log(res.data)
                 this.setState({ product: res.data.data.product, loading: false })

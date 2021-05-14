@@ -50,7 +50,7 @@ export class Home extends Component {
             variables: {}
         }
 
-        axios.post("http://localhost:50308/graphql", body)
+        axios.post(process.env.API_URL + "/graphql", body)
             .then(res => {
                 console.log(res.data)
                 this.setState({ products: res.data.data.products, loading: false })
@@ -67,7 +67,7 @@ export class Home extends Component {
             variables: {}
         }
 
-        axios.post("http://localhost:50308/graphql", body)
+        axios.post(process.env.API_URL + "/graphql", body)
             .then(res => {
                 if (res.data.data.status) {
                     this.getProducts();

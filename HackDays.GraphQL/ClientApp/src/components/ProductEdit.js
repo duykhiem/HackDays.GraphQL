@@ -93,7 +93,7 @@ export class EditProduct extends Component {
             variables: {}
         }
 
-        axios.post("http://localhost:50308/graphql", body)
+        axios.post(process.env.API_URL + "/graphql", body)
             .then(res => {
                 console.log(res.data)
                 this.setState({ product: res.data.data.product, loading: false })
@@ -120,7 +120,7 @@ export class EditProduct extends Component {
             variables: {}
         }
 
-        axios.post("http://localhost:50308/graphql", body)
+        axios.post(process.env.API_URL + "/graphql", body)
             .then(res => {
                 console.log(res.data)
                 alert('Add new product successfully!');
