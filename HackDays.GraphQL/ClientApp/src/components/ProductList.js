@@ -1,19 +1,13 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export function ProductList(props) {
-
-    const handleDelete = function (event, id, name) {
-        event.preventDefault();
-        if (window.confirm(`Are you sure you want to delete product "${name}" ?`)) {
-            props.onDeleteProduct(id);
-        }
-    };
-
+function ProductList(props) {
+    let { products, onDeleteProduct, history} = props;
     return (
         <div className="row">
             {
-                props.products.map((product) =>
+                products.map((product) =>
                     <div className="col-md-3" key={product.id}>
                         <div className="product-item">
                             <Link to={{ pathname: '/product/' + product.id + '/detail' }} className="text-decoration-none text-reset">
@@ -22,8 +16,17 @@ export function ProductList(props) {
                                 <small className="text-muted">{product.code} </small>
                                 <div>${product.price}</div>
                                 <span className="product-actions">
-                                    <Link to={{ pathname: '/product/' + product.id + '/edit' }} ><i className="fa fa-pencil mr-2"></i></Link>
-                                    <a href="javascript:void(0)"><i onClick={(e) => handleDelete(e, product.id, product.name)} className="text-danger fa fa-trash"></i></a>
+                                    <img src={require('../assets/edit-pen.png')} onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push(`/product/${product.id}/edit`);
+                                    }}
+                                    className="mr-2"
+                                    width="20" />
+    
+                                    <img src={require('../assets/recycle-bin.png')} onClick={(e) => {
+                                        e.preventDefault();
+                                        onDeleteProduct(product);}}
+                                        width="20" />
                                 </span>
                             </Link>
                         </div>
@@ -33,3 +36,10 @@ export function ProductList(props) {
         </div>
     );
 }
+
+ProductList.propTypes = {
+    products: PropTypes.array.isRequired,
+    onDeleteProduct: PropTypes.func.isRequired
+};
+
+export default ProductList;

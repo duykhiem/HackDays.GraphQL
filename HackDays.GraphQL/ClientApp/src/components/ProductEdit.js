@@ -35,7 +35,7 @@ export class EditProduct extends Component {
         return (
             this.state.loading
                 ? <p><em>Loading...</em></p> :
-                <React.Fragment>
+                <>
                     <div>
                         <h2>Update Product</h2>
                         <div className="row">
@@ -73,8 +73,7 @@ export class EditProduct extends Component {
                             </div>
                         </div>
                     </div>
-
-                </React.Fragment >
+                </>
         );
     }
 

@@ -1,30 +1,30 @@
 import * as types from "./actionTypes";
-import * as courseApi from "../../api/courseApi";
+import * as productApi from "../../api/productApi";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function loadCourseSuccess(courses) {
-  return { type: types.LOAD_COURSES_SUCCESS, courses };
+export function loadProductSuccess(products) {
+  return { type: types.LOAD_PRODUCTS_SUCCESS, products };
 }
 
-export function createCourseSuccess(course) {
-  return { type: types.CREATE_COURSE_SUCCESS, course };
+export function createProductSuccess(product) {
+  return { type: types.CREATE_PRODUCT_SUCCESS, product };
 }
 
-export function updateCourseSuccess(course) {
-  return { type: types.UPDATE_COURSE_SUCCESS, course };
+export function updateProductSuccess(product) {
+  return { type: types.UPDATE_PRODUCT_SUCCESS, product };
 }
 
-export function deleteCourseOptimistic(course) {
-  return { type: types.DELETE_COURSE_OPTIMISTIC, course };
+export function deleteProductOptimistic(product) {
+  return { type: types.DELETE_PRODUCT_OPTIMISTIC, product };
 }
 
-export function loadCourses() {
+export function loadProducts() {
   return function(dispatch) {
     dispatch(beginApiCall());
-    return courseApi
-      .getCourses()
-      .then(courses => {
-        dispatch(loadCourseSuccess(courses));
+    return productApi
+      .getProducts()
+      .then(res => {
+        dispatch(loadProductSuccess(res.data.products));
       })
       .catch(error => {
         dispatch(apiCallError(error));
@@ -33,16 +33,16 @@ export function loadCourses() {
   };
 }
 
-export function saveCourse(course) {
+export function saveProduct(product) {
   //eslint-disable-next-line no-unused-vars
   return function(dispatch, getState) {
     dispatch(beginApiCall());
-    return courseApi
-      .saveCourse(course)
-      .then(savedCourse => {
-        course.id
-          ? dispatch(updateCourseSuccess(savedCourse))
-          : dispatch(createCourseSuccess(savedCourse));
+    return productApi
+      .saveProduct(product)
+      .then(savedProduct => {
+        product.id
+          ? dispatch(updateProductSuccess(savedProduct))
+          : dispatch(createProductSuccess(savedProduct));
       })
       .catch(error => {
         dispatch(apiCallError(error));
@@ -51,11 +51,11 @@ export function saveCourse(course) {
   };
 }
 
-export function deleteCourse(course) {
+export function deleteProduct(id) {
   return function(dispatch) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
-    dispatch(deleteCourseOptimistic(course));
-    return courseApi.deleteCourse(course.id);
+    dispatch(deleteProductOptimistic(id));
+    return productApi.deleteProduct(id);
   };
 }

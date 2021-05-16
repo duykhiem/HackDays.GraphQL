@@ -1,8 +1,22 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.API_URL + "/product/";
+const baseUrl = process.env.API_URL;
 
 export function getProducts() {
-  return fetch(baseUrl)
+  const query = `{
+      products {
+        id,
+        name,
+        code,
+        imageUrl,
+        price
+      }
+    }`;
+
+  return fetch(`${baseUrl}/graphql`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ query: query })
+    })
     .then(handleResponse)
     .catch(handleError);
 }
@@ -18,7 +32,15 @@ export function saveProduct(product) {
 }
 
 export function deleteProduct(productId) {
-  return fetch(baseUrl + productId, { method: "DELETE" })
+    const query = `mutation {
+        status: deleteProduct(id: ${productId})
+    }`;
+    
+    return fetch(`${baseUrl}/graphql`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ query: query })
+    })
     .then(handleResponse)
     .catch(handleError);
 }
