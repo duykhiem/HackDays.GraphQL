@@ -1,12 +1,12 @@
 using GraphQL.Server;
 using GraphQL.Types;
 using HackDays.GraphQL.GraphQL;
+using HackDays.GraphQL.GraphQL.Messaging;
 using HackDays.GraphQL.GraphQL.Types;
 using HackDays.GraphQL.Models;
 using HackDays.GraphQL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,10 +35,15 @@ namespace HackDays.GraphQL
             services.AddScoped<ProductGraphType>();
             services.AddScoped<CategoryGraphType>();
             services.AddScoped<ProductInputType>();
+            services.AddScoped<ProductMutatedMessageType>();
+
             services.AddScoped<ProductRepository>();
+            services.AddSingleton<MessagingService>();
             services.AddScoped<ProductQuery>();
             services.AddScoped<ProductMutation>();
-            services.AddScoped<ISchema, ProductSchema>();
+            services.AddScoped<ProductSubscription>();
+
+            services.AddScoped<ProductSchema>();
 
 
             services.AddLogging(builder => builder.AddConsole());
@@ -50,18 +55,24 @@ namespace HackDays.GraphQL
             })
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddSystemTextJson()
-            .AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User });
+            .AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
+            .AddWebSockets()
+            .AddDataLoader();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, GraphQLDBContext context)
         {
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -78,8 +89,11 @@ namespace HackDays.GraphQL
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseWebSockets();
+            app.UseGraphQLWebSockets<ProductSchema>();
+
             // add http for Schema at default url /graphql
-            app.UseGraphQL<ISchema>();
+            app.UseGraphQL<ProductSchema>();
 
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();

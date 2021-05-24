@@ -1,6 +1,5 @@
 ﻿using HackDays.GraphQL.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 

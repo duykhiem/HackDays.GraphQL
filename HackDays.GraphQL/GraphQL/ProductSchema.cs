@@ -11,6 +11,7 @@ namespace HackDays.GraphQL.GraphQL
         {
             Query = provider.GetRequiredService<ProductQuery>();
             Mutation = provider.GetRequiredService<ProductMutation>();
+            Subscription = provider.GetRequiredService<ProductSubscription>();
         }
     }
 }
