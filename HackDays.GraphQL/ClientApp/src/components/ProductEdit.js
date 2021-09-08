@@ -63,7 +63,7 @@ export class EditProduct extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Description</label>
-                                        <textarea name="description" onChange={this.handleChanges} className="form-control">{this.state.product.description}</textarea>
+                                        <textarea name="description" value={this.state.product.description} onChange={this.handleChanges} className="form-control" />
                                     </div>
                                     <div className="form-group">
                                         <Link to='/' className="btn btn-secondary">Back</Link>

@@ -14,18 +14,6 @@ export class ProductDetail extends Component {
     componentDidMount() {
         this.getProductById(this.props.match.params.id);
     }
-    handleChanges = (event) => {
-        const fieldName = event.target.name;
-        const currentProduct = Object.assign({}, this.state.product);
-        const targetValue = event.target.value;
-        currentProduct[fieldName] = targetValue;
-        this.setState({ product: currentProduct })
-    };
-
-    handleSubmit(event) {
-        event.preventDefault();
-        this.submitData();
-    }
 
     render() {
         return (
@@ -34,7 +22,7 @@ export class ProductDetail extends Component {
                 <React.Fragment>
                     <div className="row">
                         <div className="col-md-4">
-                            <img src={this.state.product.imageUrl} className="w-100" />
+                            <img src={this.state.product.imageUrl} className="w-100" alt={this.state.product.name}/>
                         </div>
                         <div className="col-md-8">
                             <h5>{this.state.product.name} </h5>
