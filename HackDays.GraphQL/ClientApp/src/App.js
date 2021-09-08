@@ -7,6 +7,8 @@ import { Womens } from './components/Womens';
 import { ProductDetail } from './components/ProductDetail';
 import { AddProduct } from './components/ProductAdd';
 import { EditProduct } from './components/ProductEdit';
+import { client } from "./client";
+import { ApolloProvider } from '@apollo/client';
 
 import './custom.css'
 
@@ -15,14 +17,16 @@ export default class App extends Component {
 
     render() {
         return (
-            <Layout>
-                <Route exact path='/' component={Home} />
-                <Route path='/mens' component={Mens} />
-                <Route path='/womens' component={Womens} />
-                <Route path='/product/add' component={AddProduct} />
-                <Route path='/product/:id/detail' component={ProductDetail} />
-                <Route path='/product/:id/edit' component={EditProduct} />
-            </Layout>
+            <ApolloProvider client={client}>
+                <Layout>
+                    <Route exact path='/' component={Home} />
+                    <Route path='/mens' component={Mens} />
+                    <Route path='/womens' component={Womens} />
+                    <Route path='/product/add' component={AddProduct} />
+                    <Route path='/product/:id/detail' component={ProductDetail} />
+                    <Route path='/product/:id/edit' component={EditProduct} />
+                </Layout>
+            </ApolloProvider>
         );
     }
 }

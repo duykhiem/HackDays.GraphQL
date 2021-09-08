@@ -1,42 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios'
 import { CarouselImages } from './CarouselImages';
 import { ProductList } from './ProductList'
 import { Link } from 'react-router-dom';
-export class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: [],
-            loading: true
-        };
+import { gql, useSubscription } from "@apollo/client";
+
+const RATES_UPDATED = gql`
+  subscription {
+    productMutated {
+      name
+      eventType
+      id
     }
+  }
+`;
 
-    componentDidMount() {
-        this.getProducts();
-    }
+export const Home = (props) => {
+    const [products, setProducts] = useState([]);
+    const [alert, setAlert] = useState("");
+    const [loading, setLoading] = useState(true);
 
-    render() {
-
-        return (
-            <div>
-                <CarouselImages />
-                {
-                    this.state.loading
-                        ? <p><em>Loading...</em></p> :
-                        <div className="flashSale">
-                            <h2>
-                                FLASH SALE!!!
-                                <small className="float-right"><Link to="/product/add" className="btn btn-default" >Create product</Link></small>
-                            </h2>
-                            <ProductList products={this.state.products} onDeleteProduct={(id) => this.deleteProduct(id)} />
-                        </div>
-                }
-            </div>
-        );
-    }
-
-    async getProducts() {
+    const getProducts = () => {
         const body = {
             query: `query {
               products {
@@ -52,12 +36,28 @@ export class Home extends Component {
 
         axios.post("http://localhost:50308/graphql", body)
             .then(res => {
-                console.log(res.data)
-                this.setState({ products: res.data.data.products, loading: false })
+                setProducts(res.data.data.products);
+                setLoading(false);
             })
     }
 
-    async deleteProduct(id) {
+    useSubscription(
+        RATES_UPDATED,
+        { 
+            variables: {},
+            onSubscriptionData: (data) => {
+                console.log(data);
+                let message = "";
+                if (data.subscriptionData.data?.productMutated?.eventType) {
+                    message = "1 product has been " + data.subscriptionData.data?.productMutated?.eventType;
+                }
+                setAlert(message);
+                getProducts();
+            }
+        },
+    );
+
+    const deleteProduct = (id) => {
         const body = {
             query: `
                     mutation {
@@ -70,8 +70,30 @@ export class Home extends Component {
         axios.post("http://localhost:50308/graphql", body)
             .then(res => {
                 if (res.data.data.status) {
-                    this.getProducts();
+
                 }
             })
     }
+
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    return (
+        <div>
+            <CarouselImages />
+            {
+                loading
+                    ? <p><em>Loading...</em></p> :
+                    <div className="flashSale">
+                        <h1>{alert}</h1>
+                        <h2>
+                            FLASH SALE!!!
+                            <small className="float-right"><Link to="/product/add" className="btn btn-default" >Create product</Link></small>
+                        </h2>
+                        <ProductList products={products} onDeleteProduct={(id) => deleteProduct(id)} />
+                    </div>
+            }
+        </div>
+    );
 }
