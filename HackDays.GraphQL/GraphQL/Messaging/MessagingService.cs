@@ -15,6 +15,9 @@ namespace HackDays.GraphQL.GraphQL.Messaging
             {
                 Id = product.Id,
                 Name = product.Name,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                Code = product.Code,
                 EventType= eventType
             };
             _messageStream.OnNext(message);

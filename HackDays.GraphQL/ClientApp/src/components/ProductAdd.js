@@ -118,7 +118,7 @@ export class AddProduct extends Component {
                       code: "${this.state.product.code}"
                       description: "${this.state.product.description}"
                       imageUrl: "${this.state.product.imageUrl}"
-                      price: ${this.state.product.price}
+                      price: ${parseFloat(this.state.product.price)}
                       category: "SHOES"
                   }) {
                     id

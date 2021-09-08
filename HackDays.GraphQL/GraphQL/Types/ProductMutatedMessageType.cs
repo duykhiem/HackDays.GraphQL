@@ -9,6 +9,9 @@ namespace HackDays.GraphQL.GraphQL.Types
         {
             Field(t => t.Id);
             Field(t => t.Name);
+            Field(t => t.Code);
+            Field(t => t.Price);
+            Field(t => t.ImageUrl);
             Field(t => t.EventType);
         }
     }
